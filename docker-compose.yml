@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  mongo_db:
+    image: mongo
+    restart: always
+
+  server:
+    build: .
+    container_name: node_server
+    volumes:
+      - .:/server
+      - /server/node_modules
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+      - PORT=${PORT}
+    depends_on:
+      - mongo_db
+    command: node server.js
