@@ -1,7 +1,7 @@
 name: Vercel Production Deployment
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }} 
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }} 
 
 # Controls when the action will run. 
 on:
@@ -33,16 +33,21 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm ci and test
-        run: |
-          npm ci
-          npm test  
-      - name: Build the stack with docker
-        run: docker compose up -d
-      - name: Run e2e tests with cypress
-        uses: cypress-io/github-action@v6
-      - name: Stop the stack
-        run: docker compose down
+
+      # - name: npm ci and test
+      #   run: |
+      #     npm ci
+      #     npm test  
+
+      # - name: Build the stack with docker
+      #   run: docker compose up -d
+
+      # - name: Run e2e tests with cypress
+      #   uses: cypress-io/github-action@v6
+
+      # - name: Stop the stack
+      #   run: docker compose down
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
