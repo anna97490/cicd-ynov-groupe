@@ -1,8 +1,22 @@
 {
+  "name": "cicd-ynov-groupe",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "mongoose": "^8.16.0"
+    "express": "^4.19.2",
+    "mongoose": "^8.16.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^30.0.3",
+    "mockingoose": "^2.16.2"
+  },
+    "jest": {
+    "testEnvironment": "node"
   }
 }
