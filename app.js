@@ -34,13 +34,26 @@ const app = express();
 // Configurations
 // ------------------------------
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://anna97490.github.io"
+];
+
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://ton-front-en-prod.com"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 };
+
 app.use(cors(corsOptions));
+
 
 // Pour gérer les requêtes preflight OPTIONS
 app.options('*', cors(corsOptions));
