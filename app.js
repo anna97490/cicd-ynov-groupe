@@ -36,7 +36,9 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://anna97490.github.io"
+  "https://anna97490.github.io",
+  "https://anna97490.github.io/ci-cd-ynov/",
+  "https://anna97490.github.io/ci-cd-ynov",
 ];
 
 const corsOptions = {
