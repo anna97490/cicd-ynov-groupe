@@ -119,7 +119,7 @@ app.post('/users', async (req, res) => {
   }
 });
 
-app.use("/users", router);
+//app.use("/users", router);
 
 // ------------------------------
 // Routes pour BlogPost
