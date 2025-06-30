@@ -35,12 +35,16 @@ const app = express();
 // ------------------------------
 
 const corsOptions = {
-  /* origin: process.env.FRONT_URL, */
-  origin: "*",
-  optionsSuccessStatus: 200,
+  origin: ["http://localhost:3000", "https://ton-front-en-prod.com"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 };
-
 app.use(cors(corsOptions));
+
+// Pour gérer les requêtes preflight OPTIONS
+app.options('*', cors(corsOptions));
+
 app.use(express.json());
 
 // Route de test
@@ -179,5 +183,5 @@ app.use("/posts", router);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Export de l’app (si utilisation dans un autre fichier comme server.js)
+// Export de l'app (si utilisation dans un autre fichier comme server.js)
 module.exports = app;
