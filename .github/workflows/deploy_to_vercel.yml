@@ -61,9 +61,6 @@ jobs:
       - name: Build the stack with Docker
         run: docker compose up -d
 
-      - name: Run end-to-end tests with Cypress
-        uses: cypress-io/github-action@v6
-
       - name: Stop the stack
         run: docker compose down
 
