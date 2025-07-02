@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751468559363" clover="3.2.0">
-  <project timestamp="1751468559363" name="All files">
-    <metrics statements="53" coveredstatements="50" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="5" elements="63" coveredelements="57" complexity="0" loc="53" ncloc="53" packages="2" files="4" classes="4"/>
+<coverage generated="1751469844525" clover="3.2.0">
+  <project timestamp="1751469844525" name="All files">
+    <metrics statements="53" coveredstatements="51" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="4" elements="63" coveredelements="57" complexity="0" loc="53" ncloc="53" packages="2" files="4" classes="4"/>
     <package name="cicd_projet_groupe">
-      <metrics statements="45" coveredstatements="42" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="5"/>
+      <metrics statements="45" coveredstatements="43" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="4"/>
       <file name="app.js" path="C:\Users\Anna\Desktop\cicd_projet_groupe\app.js">
-        <metrics statements="40" coveredstatements="37" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="5"/>
+        <metrics statements="40" coveredstatements="38" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="4"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
@@ -19,30 +19,30 @@
         <line num="22" count="2" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
         <line num="27" count="2" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
         <line num="31" count="2" type="stmt"/>
         <line num="37" count="2" type="stmt"/>
         <line num="44" count="2" type="stmt"/>
-        <line num="46" count="3" type="cond" truecount="2" falsecount="2"/>
-        <line num="47" count="3" type="stmt"/>
+        <line num="46" count="4" type="cond" truecount="2" falsecount="2"/>
+        <line num="47" count="4" type="stmt"/>
         <line num="49" count="0" type="stmt"/>
         <line num="57" count="2" type="stmt"/>
         <line num="61" count="2" type="stmt"/>
         <line num="63" count="2" type="stmt"/>
         <line num="66" count="2" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
         <line num="88" count="2" type="stmt"/>
-        <line num="89" count="1" type="stmt"/>
-        <line num="90" count="1" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
         <line num="91" count="1" type="stmt"/>
-        <line num="93" count="0" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
         <line num="110" count="2" type="stmt"/>
-        <line num="112" count="1" type="stmt"/>
-        <line num="113" count="1" type="stmt"/>
-        <line num="115" count="1" type="stmt"/>
-        <line num="121" count="1" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="113" count="2" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
+        <line num="121" count="2" type="stmt"/>
         <line num="122" count="1" type="stmt"/>
-        <line num="124" count="0" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
         <line num="128" count="2" type="stmt"/>
         <line num="134" count="2" type="stmt"/>
         <line num="137" count="2" type="stmt"/>

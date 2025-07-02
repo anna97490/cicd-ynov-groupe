@@ -136,8 +136,8 @@ describe('Tests API Express sans supertest ni axios', () => {
   });
 
   test('CORS => refuse un origin non autorisé', async () => {
-    await expect(
-      makeRequest('/', 'GET', null, { Origin: 'http://not-allowed.com' })
-    ).rejects.toThrow();
+    const response = await makeRequest('/', 'GET', null, { Origin: 'http://not-allowed.com' });
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toContain('Not allowed by CORS');
   });
 });
