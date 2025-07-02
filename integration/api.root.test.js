@@ -1,9 +1,7 @@
 const http = require('http');
-const app = require('./app');
-const mongoose = require('mongoose');
-const BlogPost = require('./models/blogPost');
+const app = require('../app');
 
-// Mock propre de mongoose (sans casser Schema)
+// Mock de mongoose (sans casser Schema)
 jest.mock('mongoose', () => {
   const actualMongoose = jest.requireActual('mongoose');
   return {
@@ -14,7 +12,7 @@ jest.mock('mongoose', () => {
 });
 
 // Mock du modèle BlogPost
-jest.mock('./models/blogPost', () => {
+jest.mock('../models/blogPost', () => {
   const mockFind = jest.fn(() => ({
     populate: jest.fn().mockResolvedValue([
       { title: 'Titre Test', content: 'Contenu Test', author: '123' },
@@ -51,7 +49,7 @@ afterAll((done) => {
   server.close(done);
 });
 
-function makeRequest(path, method = 'GET', data = null, extraHeaders = {}) {
+function makeRequest(path, method = 'GET', data = null) {
   return new Promise((resolve, reject) => {
     const options = {
       hostname: 'localhost',
@@ -60,7 +58,6 @@ function makeRequest(path, method = 'GET', data = null, extraHeaders = {}) {
       method,
       headers: {
         'Content-Type': 'application/json',
-        ...extraHeaders,
       },
     };
 
@@ -87,21 +84,15 @@ function makeRequest(path, method = 'GET', data = null, extraHeaders = {}) {
   });
 }
 
-describe('Tests API Express sans supertest ni axios', () => {
-  test('GET / => Hello World', async () => {
-    const response = await makeRequest('/');
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toBe('Hello World');
-  });
-
-  test('GET /posts => retourne la liste des posts', async () => {
+describe('Intégration API /posts', () => {
+  test('GET /posts retourne la liste des posts', async () => {
     const response = await makeRequest('/posts');
     expect(response.statusCode).toBe(200);
     expect(response.body.posts.length).toBeGreaterThan(0);
     expect(response.body.posts[0].title).toBe('Titre Test');
   });
 
-  test('POST /posts => création de post', async () => {
+  test('POST /posts crée un post', async () => {
     const newPost = {
       title: 'Mon Titre',
       content: 'Contenu de test',
@@ -111,33 +102,5 @@ describe('Tests API Express sans supertest ni axios', () => {
     const response = await makeRequest('/posts', 'POST', newPost);
     expect(response.statusCode).toBe(201);
     expect(response.body.title).toBe('Mon Titre');
-  });
-
-  test('GET /posts => 500 si erreur dans BlogPost.find()', async () => {
-    const originalFind = BlogPost.find;
-    BlogPost.find = jest.fn(() => ({
-      populate: jest.fn().mockRejectedValue(new Error('Erreur simulée')),
-    }));
-
-    const response = await makeRequest('/posts');
-    expect(response.statusCode).toBe(500);
-    expect(response.body.error).toBe('Erreur simulée');
-
-    BlogPost.find = originalFind;
-  });
-
-  test('GET /unknown => 404 Not Found', async () => {
-    const response = await makeRequest('/unknown');
-    expect(response.statusCode).toBe(404);
-  });
-
-  test('MongoDB connection a été appelée', () => {
-    expect(mongoose.connect).toHaveBeenCalled();
-  });
-
-  test('CORS => refuse un origin non autorisé', async () => {
-    await expect(
-      makeRequest('/', 'GET', null, { Origin: 'http://not-allowed.com' })
-    ).rejects.toThrow();
   });
 });

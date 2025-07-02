@@ -36,9 +36,9 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://anna97490.github.io",
-  "https://anna97490.github.io/ci-cd-ynov/",
-  "https://anna97490.github.io/ci-cd-ynov",
+  "https://fleurkernevez.github.io",
+  "https://fleurkernevez.github.io/integration-deploiement/",
+  "https://fleurkernevez.github.io/integration-deploiement",
 ];
 
 const corsOptions = {
@@ -69,59 +69,6 @@ app.get('/', (req, res) => {
 
 
 // ------------------------------
-// Routes pour User
-// ------------------------------
-
-/**
- * @description Get All users
- * @route GET /utilisateurs
- * @swagger
- * /user:
- *   get:
- *     summary: Returns all users
- *     responses:
- *       200:
- *         description: A successful response
- */
-
-// Récupérer tous les utilisateurs
-app.get('/users', async (req, res) => {
-  console.log('/user')
-  try {
-    const users = await User.find({});
-    res.status(200).json({ utilisateurs: users });
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-/**
-* @description Create one user
-* @route POST /utilisateurs
- * @swagger
- * /user:
- *   post:
- *     summary: Create one user
- *     responses:
- *       200:
- *         description: A successful response
- */
-
-// Créer un utilisateur
-app.post('/users', async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-//app.use("/users", router);
-
-// ------------------------------
 // Routes pour BlogPost
 // ------------------------------
 
@@ -140,18 +87,7 @@ app.post('/users', async (req, res) => {
 // Récupérer tous les billets de blog
 router.get('/', async (req, res) => {
   try {
-    const { authorEmail } = req.query;
-    let filter = {};
-
-    if (authorEmail) {
-      const author = await User.findOne({ email: authorEmail });
-      if (!author) {
-        return res.status(404).json({ message: 'Auteur non trouvé' });
-      }
-      filter.author = author._id;
-    }
-
-    const posts = await BlogPost.find(filter).populate('author');
+    const posts = await BlogPost.find({}).populate('author');
     res.status(200).json({ posts });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -174,13 +110,12 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 
     try {
-    const { title, content, author, date } = req.body;
+    const { title, content, author } = req.body;
 
     const newPost = new BlogPost({
       title,
       content,
       author,
-      date: date ? new Date(date) : new Date()
     });
 
     await newPost.save();

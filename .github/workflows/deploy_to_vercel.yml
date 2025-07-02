@@ -3,61 +3,85 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }} 
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }} 
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_test_and_deploy:
-    permissions:                # Job-level permissions configuration starts here
-        contents: write           # 'write' access to repository contents
-        pull-requests: write      # 'write' access to pull requests
-    # The type of runner that the job will run on
+    permissions:                
+        contents: write          
+        pull-requests: write      
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [20.x]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
-      # - name: npm ci and test
-      #   run: |
-      #     npm ci
-      #     npm test  
+      - name: Install dependencies
+        run: npm ci
 
-      # - name: Build the stack with docker
-      #   run: docker compose up -d
+      - name: Run unit tests with coverage
+        run: npm test -- --coverage
 
-      # - name: Run e2e tests with cypress
-      #   uses: cypress-io/github-action@v6
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
-      # - name: Stop the stack
-      #   run: docker compose down
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests with coverage
+        run: npm test -- --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Build the stack with Docker
+        run: docker compose up -d
+
+      - name: Run end-to-end tests with Cypress
+        uses: cypress-io/github-action@v6
+
+      - name: Stop the stack
+        run: docker compose down
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
+
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN_GP }}
+
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN_GP }}
-      #- name: Deploy Project Artifacts to Vercel
-      #  run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_GP }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN_GP }}
+
       - name: Deploy to prod
         run: vercel --prod --token=${{ secrets.VERCEL_TOKEN_GP }}
+        
   # trigger-event:
   #   runs-on: ubuntu-latest
   #   needs: build_test_and_deploy
