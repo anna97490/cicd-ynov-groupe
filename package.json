@@ -16,7 +16,9 @@
   },
   "devDependencies": {
     "jest": "^30.0.3",
-    "mockingoose": "^2.16.2"
+    "mockingoose": "^2.16.2",
+    "superagent": "^10.2.1",
+    "supertest": "^7.1.1"
   },
   "jest": {
     "testEnvironment": "node"
