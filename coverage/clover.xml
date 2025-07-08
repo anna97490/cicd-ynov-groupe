@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751963511126" clover="3.2.0">
-  <project timestamp="1751963511126" name="All files">
-    <metrics statements="62" coveredstatements="58" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6" elements="76" coveredelements="71" complexity="0" loc="62" ncloc="62" packages="2" files="4" classes="4"/>
+<coverage generated="1751964390303" clover="3.2.0">
+  <project timestamp="1751964390303" name="All files">
+    <metrics statements="62" coveredstatements="59" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6" elements="76" coveredelements="72" complexity="0" loc="62" ncloc="62" packages="2" files="4" classes="4"/>
     <package name="cicd-ynov-groupe">
-      <metrics statements="54" coveredstatements="50" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6"/>
+      <metrics statements="54" coveredstatements="51" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6"/>
       <file name="app.js" path="/Users/fleurkernevez/Desktop/documents/Ynov/cicd/cicd-groupe/cicd-ynov-groupe/app.js">
-        <metrics statements="49" coveredstatements="45" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6"/>
+        <metrics statements="49" coveredstatements="46" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6"/>
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
@@ -43,8 +43,8 @@
         <line num="120" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="121" count="1" type="stmt"/>
         <line num="124" count="3" type="stmt"/>
-        <line num="125" count="3" type="stmt"/>
-        <line num="127" count="0" type="stmt"/>
+        <line num="125" count="2" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
         <line num="137" count="2" type="stmt"/>
         <line num="138" count="2" type="stmt"/>
         <line num="139" count="2" type="stmt"/>

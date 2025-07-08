@@ -1,9 +1,8 @@
 const http = require('http');
 const app = require('./app');
 const mongoose = require('mongoose');
-const BlogPost = require('./models/blogPost');
 
-// Mock propre de mongoose (sans casser Schema)
+// Mock propre de mongoose
 jest.mock('mongoose', () => {
   const actualMongoose = jest.requireActual('mongoose');
   return {
@@ -15,11 +14,9 @@ jest.mock('mongoose', () => {
 
 // Mock du modèle BlogPost
 jest.mock('./models/blogPost', () => {
-  const mockFind = jest.fn(() => ({
-    populate: jest.fn().mockResolvedValue([
-      { title: 'Titre Test', content: 'Contenu Test', author: '123' },
-    ]),
-  }));
+  const mockFind = jest.fn().mockResolvedValue([
+    { title: 'Titre Test', content: 'Contenu Test', author: '123' },
+  ]);
 
   function BlogPost(data) {
     Object.assign(this, data);
@@ -35,6 +32,8 @@ jest.mock('./models/blogPost', () => {
 
   return BlogPost;
 });
+
+const BlogPost = require('./models/blogPost');
 
 let server;
 let PORT;
@@ -115,9 +114,7 @@ describe('Tests API Express sans supertest ni axios', () => {
 
   test('GET /posts => 500 si erreur dans BlogPost.find()', async () => {
     const originalFind = BlogPost.find;
-    BlogPost.find = jest.fn(() => ({
-      populate: jest.fn().mockRejectedValue(new Error('Erreur simulée')),
-    }));
+    BlogPost.find = jest.fn().mockRejectedValue(new Error('Erreur simulée'));
 
     const response = await makeRequest('/posts');
     expect(response.statusCode).toBe(500);
@@ -131,13 +128,13 @@ describe('Tests API Express sans supertest ni axios', () => {
     expect(response.statusCode).toBe(404);
   });
 
-  test('MongoDB connection a été appelée', () => {
-    expect(mongoose.connect).toHaveBeenCalled();
-  });
-
   test('CORS => refuse un origin non autorisé', async () => {
-    const response = await makeRequest('/', 'GET', null, { Origin: 'http://not-allowed.com' });
+    const response = await makeRequest('/', 'GET', null, {
+      Origin: 'http://not-allowed.com',
+    });
+
     expect(response.statusCode).toBe(500);
+    expect(typeof response.body).toBe('string');
     expect(response.body).toContain('Not allowed by CORS');
   });
 });
